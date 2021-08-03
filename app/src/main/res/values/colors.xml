@@ -13,4 +13,8 @@
     <color name="pallet_red">#FF7777</color>
     <color name="pallet_white">#FFFFFF</color>
     <color name="pallet_off_white">#F7F7F7</color>
+    <color name="pallet_grey2">#5A5A5A</color>
+    <color name="pallet_grey3">#707070</color>
+    <color name="pallet_grey4">#95989A</color>
+    <color name="transparent">#00000000</color>
 </resources>

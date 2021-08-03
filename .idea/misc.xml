@@ -3,7 +3,20 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/alexm/AndroidStudioProjects/ChicECommerce/app/src/main/res/drawable-v24/drawer_item_txt_color.xml" value="0.2703125" />
+        <entry key="..\:/Users/alexm/AndroidStudioProjects/ChicECommerce/app/src/main/res/drawable-v24/red_rectangle.xml" value="0.2703125" />
+        <entry key="..\:/Users/alexm/AndroidStudioProjects/ChicECommerce/app/src/main/res/drawable/black_rectangle.xml" value="0.2703125" />
+        <entry key="..\:/Users/alexm/AndroidStudioProjects/ChicECommerce/app/src/main/res/drawable/btn_bg.xml" value="0.2703125" />
+        <entry key="..\:/Users/alexm/AndroidStudioProjects/ChicECommerce/app/src/main/res/drawable/drawer_item_bg.xml" value="0.2703125" />
+        <entry key="..\:/Users/alexm/AndroidStudioProjects/ChicECommerce/app/src/main/res/drawable/drawer_item_txt_color.xml" value="0.2703125" />
+        <entry key="..\:/Users/alexm/AndroidStudioProjects/ChicECommerce/app/src/main/res/drawable/oval.xml" value="0.2703125" />
+        <entry key="..\:/Users/alexm/AndroidStudioProjects/ChicECommerce/app/src/main/res/drawable/search_btn_bg.xml" value="0.2703125" />
+        <entry key="..\:/Users/alexm/AndroidStudioProjects/ChicECommerce/app/src/main/res/layout/activity_login.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/alexm/AndroidStudioProjects/ChicECommerce/app/src/main/res/layout/activity_main.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/alexm/AndroidStudioProjects/ChicECommerce/app/src/main/res/layout/activity_navigation.xml" value="0.264" />
+        <entry key="..\:/Users/alexm/AndroidStudioProjects/ChicECommerce/app/src/main/res/layout/activity_signup.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/alexm/AndroidStudioProjects/ChicECommerce/app/src/main/res/layout/navigation_header.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/alexm/AndroidStudioProjects/ChicECommerce/app/src/main/res/menu/navigation_menu.xml" value="0.25025641025641027" />
       </map>
     </option>
   </component>
