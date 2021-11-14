@@ -34,7 +34,7 @@
                 android:id="@+id/categoryTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Shop Bags"
+                android:text="@{viewmodel.category}"
                 android:textSize="18sp"
                 android:textColor="@color/pallet_black"
                 app:layout_constraintLeft_toLeftOf="parent"

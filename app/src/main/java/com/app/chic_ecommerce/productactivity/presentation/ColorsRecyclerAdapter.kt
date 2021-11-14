@@ -12,12 +12,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.app.chic_ecommerce.R
 import com.app.chic_ecommerce.common.data.entities.Color
-import com.app.chic_ecommerce.common.data.entities.Product
-import com.app.chic_ecommerce.common.data.mockup.categories
 import com.app.chic_ecommerce.databinding.RecyclerColorsBinding
-import com.app.chic_ecommerce.databinding.RecyclerShoplistCategoriesBinding
-import com.app.chic_ecommerce.databinding.RecyclerWishlistBinding
-import com.squareup.picasso.Picasso
 
 class ColorsRecyclerAdapter(private val owner: LifecycleOwner, private val resources: Resources, private val onColorClicked: (color: Color) -> Unit):
     RecyclerView.Adapter<ColorsRecyclerAdapter.ColorsRecyclerHolder>() {

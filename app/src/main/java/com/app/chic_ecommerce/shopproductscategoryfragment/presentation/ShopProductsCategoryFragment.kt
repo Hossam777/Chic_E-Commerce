@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -12,9 +13,7 @@ import com.app.chic_ecommerce.R
 import com.app.chic_ecommerce.common.data.Session
 import com.app.chic_ecommerce.common.data.entities.FragmentsEnum
 import com.app.chic_ecommerce.common.data.mockup.products
-import com.app.chic_ecommerce.common.data.mockup.sections
 import com.app.chic_ecommerce.databinding.FragmentShopProductsCategoryBinding
-import com.app.chic_ecommerce.wishlistfragment.presentation.WishlistRecyclerAdapter
 import com.project.ecommerce.shopfragmentlayer3.presentation.adapters.CategorySectionsRecyclerAdapter
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
@@ -25,7 +24,7 @@ class ShopProductsCategoryFragment : Fragment(), KodeinAware {
     private val viewmodel: ShopProductsCategoryViewModel by instance()
     private val session: Session by instance()
     private lateinit var binding: FragmentShopProductsCategoryBinding
-    private lateinit var sectionsRecycler: CategorySectionsRecyclerAdapter
+    private lateinit var subCategoriesRecycler: CategorySectionsRecyclerAdapter
     private lateinit var shopProductsAdapter: ShopProductsRecyclerAdapter
 
     override fun onCreateView(
@@ -38,9 +37,24 @@ class ShopProductsCategoryFragment : Fragment(), KodeinAware {
         binding.lifecycleOwner = this
         viewmodel.category.postValue(arguments?.getString("category")!!)
 
+        viewmodel.getSubCategories()
+        subscribeOnError()
+        subscribeOnSubCategories()
         setupSectionsRecycler()
         setupShopProductsRecycler()
         return binding.root
+    }
+
+    private fun subscribeOnSubCategories() {
+        viewmodel.subCategory.observe(viewLifecycleOwner, {
+            subCategoriesRecycler.setSections(it)
+        })
+    }
+
+    private fun subscribeOnError() {
+        viewmodel.onError.observe(viewLifecycleOwner, {
+            Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+        })
     }
 
     override fun onHiddenChanged(hidden: Boolean) {
@@ -59,14 +73,13 @@ class ShopProductsCategoryFragment : Fragment(), KodeinAware {
     }
 
     private fun setupSectionsRecycler() {
-        sectionsRecycler = CategorySectionsRecyclerAdapter (resources, {
+        subCategoriesRecycler = CategorySectionsRecyclerAdapter (resources, {
 
         },{
 
         })
-        sectionsRecycler.setSections(sections)
         binding.sectionsRecycler.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        binding.sectionsRecycler.adapter = sectionsRecycler
+        binding.sectionsRecycler.adapter = subCategoriesRecycler
     }
 
 }

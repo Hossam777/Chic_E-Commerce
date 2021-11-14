@@ -1,20 +1,16 @@
 package com.app.chic_ecommerce.shopproductsfragment.presentation
 
-import android.content.res.Resources
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.app.chic_ecommerce.R
-import com.app.chic_ecommerce.common.data.entities.Product
 import com.app.chic_ecommerce.databinding.RecyclerShoplistCategoriesBinding
-import com.app.chic_ecommerce.databinding.RecyclerWishlistBinding
-import com.squareup.picasso.Picasso
+import com.app.chic_ecommerce.shopproductsfragment.data.entities.Category
 
-class ShopListCategoriesRecyclerAdapter(private val resources: Resources, private val onCategoryClicked: (category: String) -> Unit):
+class ShopListCategoriesRecyclerAdapter(private val onCategoryClicked: (category: String) -> Unit):
     RecyclerView.Adapter<ShopListCategoriesRecyclerAdapter.ShopListCategoriesRecyclerHolder>() {
-    private var categories: MutableList<String> = mutableListOf()
+    private var categories: MutableList<Category> = mutableListOf()
 
-    fun setCategories(categories: MutableList<String>) {
+    fun setCategories(categories: MutableList<Category>) {
         this.categories = categories
         notifyDataSetChanged()
     }
@@ -27,10 +23,10 @@ class ShopListCategoriesRecyclerAdapter(private val resources: Resources, privat
 
     override fun onBindViewHolder(holder: ShopListCategoriesRecyclerHolder, position: Int) {
         holder.binding.shopListCategoryItemLayout.setOnClickListener {
-            onCategoryClicked(categories[position])
+            onCategoryClicked(categories[position].name)
             //holder.binding.shopProductsCountTxt.setTextColor(resources.getColor(R.color.pallet_red))
         }
-        holder.binding.shopProductsCountTxt.text = categories[position]
+        holder.binding.shopProductsCountTxt.text = categories[position].name
     }
 
     override fun getItemCount(): Int {

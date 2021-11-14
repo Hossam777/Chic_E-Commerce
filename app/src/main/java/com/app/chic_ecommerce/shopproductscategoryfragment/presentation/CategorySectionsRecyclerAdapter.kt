@@ -6,11 +6,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.app.chic_ecommerce.R
 import com.app.chic_ecommerce.databinding.RecyclerCatgorySectionsBinding
+import com.app.chic_ecommerce.shopproductscategoryfragment.data.entities.SubCategory
 
 class CategorySectionsRecyclerAdapter (val resources: Resources, val onItemAdded:(String)->Unit, val onItemRemoved:(String)->Unit)
     : RecyclerView.Adapter<CategorySectionsRecyclerAdapter.CategorySectionsRecyclerViewHolder>() {
-    private var sections: MutableList<String> = mutableListOf()
-    private var selectedSections: MutableList<String> = mutableListOf()
+    private var subCategories: MutableList<SubCategory> = mutableListOf()
+    private var selectedSubCategories: MutableList<String> = mutableListOf()
 
     override fun onCreateViewHolder(
             parent: ViewGroup,
@@ -21,34 +22,34 @@ class CategorySectionsRecyclerAdapter (val resources: Resources, val onItemAdded
         return CategorySectionsRecyclerViewHolder(binding)
     }
 
-    fun setSections(sections: MutableList<String>) {
-        this.sections = sections
-        selectedSections = mutableListOf()
+    fun setSections(subCategories: MutableList<SubCategory>) {
+        this.subCategories = subCategories
+        selectedSubCategories = mutableListOf()
         notifyDataSetChanged()
     }
 
     override fun onBindViewHolder(holder: CategorySectionsRecyclerViewHolder, position: Int) {
-        holder.binding.sectionText.text = sections[position]
+        holder.binding.sectionText.text = subCategories[position].name
         holder.binding.root.setOnClickListener {
-            val section: String? = selectedSections.firstOrNull { it == sections[position] }
-            if (section == null){
+            val subCategory: String? = selectedSubCategories.firstOrNull { it == subCategories[position].name }
+            if (subCategory == null){
                 //add section
                 holder.binding.sectionText.background = resources.getDrawable(R.drawable.category_section_selected_bg)
-                selectedSections.add(sections[position])
-                onItemAdded(sections[position])
+                selectedSubCategories.add(subCategories[position].name)
+                onItemAdded(subCategories[position].name)
                 notifyItemMoved(holder.bindingAdapterPosition, 0)
             }else{
                 //remove section
                 holder.binding.sectionText.background = resources.getDrawable(R.drawable.category_section_bg)
-                selectedSections.remove(sections[position])
-                onItemRemoved(sections[position])
-                notifyItemMoved(holder.bindingAdapterPosition, selectedSections.size)
+                selectedSubCategories.remove(subCategories[position].name)
+                onItemRemoved(subCategories[position].name)
+                notifyItemMoved(holder.bindingAdapterPosition, selectedSubCategories.size)
             }
         }
     }
 
     override fun getItemCount(): Int {
-        return sections.size
+        return subCategories.size
     }
 
     inner class CategorySectionsRecyclerViewHolder(

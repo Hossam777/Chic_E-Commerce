@@ -6,17 +6,13 @@ import android.text.Editable
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.commit
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.app.chic_ecommerce.R
 import com.app.chic_ecommerce.common.data.Session
 import com.app.chic_ecommerce.common.data.entities.SliderItemModel
-import com.app.chic_ecommerce.common.data.mockup.categories
 import com.app.chic_ecommerce.common.data.mockup.colors
 import com.app.chic_ecommerce.common.presentation.SliderPagerAdapter
 import com.app.chic_ecommerce.databinding.ActivityProductBinding
-import com.app.chic_ecommerce.shopproductscategoryfragment.presentation.ShopProductsCategoryFragment
-import com.app.chic_ecommerce.shopproductsfragment.presentation.ShopListCategoriesRecyclerAdapter
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance

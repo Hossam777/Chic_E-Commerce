@@ -12,7 +12,7 @@ val categories: MutableList<String> = mutableListOf(
     "SALE %",
 )
 
-val sections: MutableList<String> = mutableListOf(
+val sections1: MutableList<String> = mutableListOf(
     "ALL",
     "Backpacks",
     "Shoulder Bags",
