@@ -6,11 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.app.chic_ecommerce.R
 import com.app.chic_ecommerce.common.data.Session
 import com.app.chic_ecommerce.common.data.entities.FragmentsEnum
+import com.app.chic_ecommerce.common.data.mockup.cartProducts
 import com.app.chic_ecommerce.databinding.FragmentCartBinding
-import com.app.chic_ecommerce.databinding.FragmentProfileBinding
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
 import org.kodein.di.generic.instance
@@ -20,6 +22,7 @@ class CartFragment : Fragment(), KodeinAware {
     private val viewModel: CartFragmentViewModel by instance()
     private val session: Session by instance()
     private lateinit var binding: FragmentCartBinding
+    private lateinit var cartAdapter: CartRecyclerAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,14 +34,34 @@ class CartFragment : Fragment(), KodeinAware {
         binding.session = session
         binding.lifecycleOwner = this
 
+        setupAdapter()
         subscribeOnSession()
         return binding.root
+    }
+
+    override fun onHiddenChanged(hidden: Boolean) {
+        super.onHiddenChanged(hidden)
+        if(!hidden)
+            session.currentFragment.postValue(FragmentsEnum.CartFragment)
+    }
+
+    private fun setupAdapter() {
+        cartAdapter = CartRecyclerAdapter({
+            TODO("AddQuantity")
+        }, {
+            TODO("RemoveQuantity")
+        }, {
+            TODO("RemoveProduct")
+        })
+        cartAdapter.setCartList(cartProducts)
+        binding.cartRecycler.adapter = cartAdapter
+        binding.cartRecycler.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
     }
 
     private fun subscribeOnSession() {
         session.cart.observe(viewLifecycleOwner, {
             if(session.cart.value != null){
-                //add products to recycler
+                cartAdapter.setCartList(it)
             }
         })
     }

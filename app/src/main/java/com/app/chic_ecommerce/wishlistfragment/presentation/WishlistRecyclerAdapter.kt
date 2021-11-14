@@ -23,7 +23,7 @@ class WishlistRecyclerAdapter(private val onRemove: (product: Product) -> Unit,
     }
 
     override fun onBindViewHolder(holder: WishlistRecyclerHolder, position: Int) {
-        Picasso.get().load(wishlist[position].image).into(holder.binding.productImg)
+        Picasso.get().load(wishlist[position].image1).into(holder.binding.productImg)
         holder.binding.addToCart.setOnClickListener { onAddToCart(wishlist[position]) }
         holder.binding.closeBtn.setOnClickListener { onRemove(wishlist[position]) }
         holder.binding.productName.text = wishlist[position].name

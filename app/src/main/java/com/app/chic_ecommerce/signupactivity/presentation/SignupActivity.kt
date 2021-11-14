@@ -11,6 +11,7 @@ import com.app.chic_ecommerce.common.data.Session
 import com.app.chic_ecommerce.common.data.entities.User
 import com.app.chic_ecommerce.databinding.ActivitySignupBinding
 import com.app.chic_ecommerce.loginactivity.presentation.LoginActivity
+import com.app.chic_ecommerce.mainactivity.presentation.MainActivity
 import com.app.chic_ecommerce.navigationactivity.presentation.NavigationActivity
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
@@ -28,6 +29,18 @@ class SignupActivity : AppCompatActivity(), KodeinAware {
         binding.lifecycleOwner = this
 
         subscribeOnError()
+        subscribeOnSignedUp()
+    }
+
+    private fun subscribeOnSignedUp() {
+        viewModel.onSignedUp.observe(this, {
+            if(it){
+                session.saveToken(viewModel.token.value!!)
+                session.user.postValue(User(viewModel.username.value!!, viewModel.mail.value!!, viewModel.phone.value!!))
+                startActivity(Intent(this, NavigationActivity::class.java))
+                finish()
+            }
+        })
     }
 
     private fun subscribeOnError() {
@@ -42,13 +55,13 @@ class SignupActivity : AppCompatActivity(), KodeinAware {
     }
 
     fun back(view: View) {
+        startActivity(Intent(this, MainActivity::class.java))
         finish()
     }
 
     fun signup(view: View) {
-        if(viewModel.signup()){
-            session.user.postValue(User(viewModel.username.value!!, viewModel.mail.value!!, viewModel.password.value!!))
-            startActivity(Intent(this, NavigationActivity::class.java))
+        if(viewModel.validateSignupData()){
+            viewModel.signup()
         }
     }
 }

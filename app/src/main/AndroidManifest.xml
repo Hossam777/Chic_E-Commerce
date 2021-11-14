@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.app.chic_ecommerce">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:name=".common.BaseApplication"
@@ -13,12 +13,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ChicECommerce">
         <activity
-            android:name=".navigationactivity.presentation.NavigationActivity"
+            android:name=".productactivity.presentation.ProductActivity"
             android:exported="true" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+        </activity>
+        <activity
+            android:name=".navigationactivity.presentation.NavigationActivity"
+            android:exported="true">
         </activity>
         <activity
             android:name=".signupactivity.presentation.SignupActivity"
@@ -29,7 +29,11 @@
         <activity
             android:name=".mainactivity.presentation.MainActivity"
             android:exported="true">
-        </activity>
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter></activity>
     </application>
 
 </manifest>

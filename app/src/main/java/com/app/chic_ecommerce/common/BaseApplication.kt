@@ -7,7 +7,9 @@ import com.app.chic_ecommerce.homefragment.di.homeFragmentModule
 import com.app.chic_ecommerce.loginactivity.di.loginActivityModule
 import com.app.chic_ecommerce.mainactivity.di.mainActivityModule
 import com.app.chic_ecommerce.navigationactivity.di.navigationActivityModule
+import com.app.chic_ecommerce.productactivity.di.productActivityModule
 import com.app.chic_ecommerce.profilefragment.di.profileFragmentModule
+import com.app.chic_ecommerce.shopproductscategoryfragment.di.shopProductsCategoryModule
 import com.app.chic_ecommerce.shopproductsfragment.di.shopProductsFragmentModule
 import com.app.chic_ecommerce.signupactivity.di.signupActivityModule
 import com.app.chic_ecommerce.wishlistfragment.di.wishlistFragmentModule
@@ -28,6 +30,8 @@ class BaseApplication : Application(), KodeinAware {
         import(cartFragmentModule)
         import(shopProductsFragmentModule)
         import(homeFragmentModule)
+        import(shopProductsCategoryModule)
+        import(productActivityModule)
     }
 
 }

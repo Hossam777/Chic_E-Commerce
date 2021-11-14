@@ -33,7 +33,14 @@ class WishlistFragment : Fragment(), KodeinAware {
         binding.lifecycleOwner = this
 
         setupAdapter()
+        subscribeOnSession()
         return binding.root
+    }
+
+    override fun onHiddenChanged(hidden: Boolean) {
+        super.onHiddenChanged(hidden)
+        if(!hidden)
+            session.currentFragment.postValue(FragmentsEnum.WishlistFragment)
     }
 
     private fun setupAdapter() {
@@ -47,4 +54,11 @@ class WishlistFragment : Fragment(), KodeinAware {
         binding.wishlistRecycler.layoutManager = GridLayoutManager(context, 2)
     }
 
+    private fun subscribeOnSession() {
+        session.wishlist.observe(viewLifecycleOwner, {
+            if(session.cart.value != null){
+                wishlistAdapter.setWishlist(it)
+            }
+        })
+    }
 }

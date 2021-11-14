@@ -3,6 +3,7 @@ package com.app.chic_ecommerce.navigationactivity.presentation
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Gravity
+import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.ImageView
@@ -30,6 +31,7 @@ class NavigationActivity : AppCompatActivity(), KodeinAware {
     private val viewModel: NavigationActivityViewModel by instance()
     private val session: Session by instance()
     private lateinit var binding: ActivityNavigationBinding
+    private var firstOpen: Boolean = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,35 +48,59 @@ class NavigationActivity : AppCompatActivity(), KodeinAware {
         }
         setupNavigation()
         subscribeOnFragmentChanged()
+        subscribeOnCartChanged()
+    }
+
+    private fun subscribeOnCartChanged() {
+        session.cart.observe(this, {
+                binding.cartCounter.text = it.size.toString()
+        })
     }
 
     override fun onStart() {
         super.onStart()
-        supportFragmentManager.commit {
-            hide(supportFragmentManager.findFragmentByTag("CartFragment")!!)
-            hide(supportFragmentManager.findFragmentByTag("ProfileFragment")!!)
-            hide(supportFragmentManager.findFragmentByTag("ShopProductsFragment")!!)
+        if(firstOpen){
+            supportFragmentManager.commit {
+                hide(supportFragmentManager.findFragmentByTag("CartFragment")!!)
+                hide(supportFragmentManager.findFragmentByTag("ProfileFragment")!!)
+                hide(supportFragmentManager.findFragmentByTag("ShopProductsFragment")!!)
+            }
+            firstOpen = false
         }
     }
 
     private fun subscribeOnFragmentChanged() {
         session.currentFragment.observe(this, {
-            println(it.toString())
             when (session.currentFragment.value){
                 FragmentsEnum.ProfileFragment -> {
-
+                    binding.navigationActivityTitle.text = resources.getText(R.string.my_account)
+                    binding.cartBtn.visibility = View.INVISIBLE
+                    binding.cartCounter.visibility = View.INVISIBLE
                 }
                 FragmentsEnum.WishlistFragment -> {
-
+                    binding.navigationActivityTitle.text = resources.getText(R.string.wishlist)
+                    binding.cartBtn.visibility = View.VISIBLE
+                    binding.cartCounter.visibility = View.VISIBLE
                 }
                 FragmentsEnum.CartFragment -> {
-
+                    binding.navigationActivityTitle.text = resources.getText(R.string.your_cart).toString() + "(" + session.cart.value!!.size + ")"
+                    binding.cartBtn.visibility = View.INVISIBLE
+                    binding.cartCounter.visibility = View.INVISIBLE
                 }
                 FragmentsEnum.HomeFragment -> {
-
+                    binding.navigationActivityTitle.text = resources.getText(R.string.minimal_chic)
+                    binding.cartBtn.visibility = View.VISIBLE
+                    binding.cartCounter.visibility = View.VISIBLE
                 }
                 FragmentsEnum.ShopProductsFragment -> {
-
+                    binding.navigationActivityTitle.text = resources.getText(R.string.minimal_chic)
+                    binding.cartBtn.visibility = View.VISIBLE
+                    binding.cartCounter.visibility = View.VISIBLE
+                }
+                FragmentsEnum.ShopProductsCategoryFragment -> {
+                    binding.navigationActivityTitle.text = resources.getText(R.string.minimal_chic)
+                    binding.cartBtn.visibility = View.VISIBLE
+                    binding.cartCounter.visibility = View.VISIBLE
                 }
             }
         })
@@ -151,7 +177,13 @@ class NavigationActivity : AppCompatActivity(), KodeinAware {
             false
         }
         binding.cartBtn.setOnClickListener {
-            TODO("CartBtn")
+            binding.navigationView.setCheckedItem(R.id.menu_my_cart)
+            supportFragmentManager.commit {
+                show(supportFragmentManager.findFragmentByTag("CartFragment")!!)
+                hide(supportFragmentManager.findFragmentByTag("ProfileFragment")!!)
+                hide(supportFragmentManager.findFragmentByTag("ShopProductsFragment")!!)
+                hide(supportFragmentManager.findFragmentByTag("HomeFragment")!!)
+            }
         }
     }
 }

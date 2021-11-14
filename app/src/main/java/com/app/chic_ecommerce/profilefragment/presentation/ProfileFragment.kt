@@ -27,7 +27,6 @@ class ProfileFragment : Fragment(), KodeinAware {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        session.currentFragment.postValue(FragmentsEnum.ProfileFragment)
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_profile, container, false)
         binding.viewmodel = viewmodel
         binding.session = session
@@ -37,6 +36,12 @@ class ProfileFragment : Fragment(), KodeinAware {
         subscribeOnOpenWishlist()
         subscribeOnEditAccount()
         return binding.root
+    }
+
+    override fun onHiddenChanged(hidden: Boolean) {
+        super.onHiddenChanged(hidden)
+        if(!hidden)
+            session.currentFragment.postValue(FragmentsEnum.ProfileFragment)
     }
 
     private fun subscribeOnOpenWishlist() {

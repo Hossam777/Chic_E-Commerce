@@ -38,6 +38,12 @@ class HomeFragment : Fragment(), KodeinAware {
         return binding.root
     }
 
+    override fun onHiddenChanged(hidden: Boolean) {
+        super.onHiddenChanged(hidden)
+        if(!hidden)
+            session.currentFragment.postValue(FragmentsEnum.HomeFragment)
+    }
+
     private fun setupView() {
         binding.shopBtn.setOnClickListener {
             Toast.makeText(context, "Sale Clicked", Toast.LENGTH_SHORT).show()
@@ -63,7 +69,7 @@ class HomeFragment : Fragment(), KodeinAware {
             "SEASON SALE up to 70%"){
             Toast.makeText(context, "70% Clicked", Toast.LENGTH_SHORT).show()
         })
-        val sliderPagerAdapter = SliderPagerAdapter(context, sliderItems)
+        val sliderPagerAdapter = SliderPagerAdapter(context, sliderItems, false)
         binding.viewPager.adapter = sliderPagerAdapter
         binding.tabLayout.setupWithViewPager(binding.viewPager, true)
     }

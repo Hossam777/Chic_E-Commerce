@@ -16,5 +16,6 @@
     <color name="pallet_grey2">#5A5A5A</color>
     <color name="pallet_grey3">#707070</color>
     <color name="pallet_grey4">#95989A</color>
+    <color name="pallet_grey5">#D8D9D9</color>
     <color name="transparent">#00000000</color>
 </resources>
