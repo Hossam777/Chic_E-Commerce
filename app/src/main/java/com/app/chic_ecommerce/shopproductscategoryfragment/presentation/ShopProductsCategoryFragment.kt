@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.app.chic_ecommerce.R
 import com.app.chic_ecommerce.common.data.Session
 import com.app.chic_ecommerce.common.data.entities.FragmentsEnum
-import com.app.chic_ecommerce.common.data.mockup.products
 import com.app.chic_ecommerce.databinding.FragmentShopProductsCategoryBinding
 import com.project.ecommerce.shopfragmentlayer3.presentation.adapters.CategorySectionsRecyclerAdapter
 import org.kodein.di.KodeinAware
@@ -38,15 +37,23 @@ class ShopProductsCategoryFragment : Fragment(), KodeinAware {
         viewmodel.category.postValue(arguments?.getString("category")!!)
 
         viewmodel.getSubCategories()
+        viewmodel.getProductsByFilter()
         subscribeOnError()
         subscribeOnSubCategories()
-        setupSectionsRecycler()
+        subscribeOnProducts()
+        setupSubCategoriesRecycler()
         setupShopProductsRecycler()
         return binding.root
     }
 
+    private fun subscribeOnProducts() {
+        viewmodel.products.observe(viewLifecycleOwner, {
+            shopProductsAdapter.setShopList(it)
+        })
+    }
+
     private fun subscribeOnSubCategories() {
-        viewmodel.subCategory.observe(viewLifecycleOwner, {
+        viewmodel.subCategories.observe(viewLifecycleOwner, {
             subCategoriesRecycler.setSections(it)
         })
     }
@@ -67,12 +74,11 @@ class ShopProductsCategoryFragment : Fragment(), KodeinAware {
         shopProductsAdapter = ShopProductsRecyclerAdapter(){
             TODO("open Product")
         }
-        shopProductsAdapter.setShopList(products)
         binding.shopListRecycler.adapter = shopProductsAdapter
         binding.shopListRecycler.layoutManager = GridLayoutManager(context, 2)
     }
 
-    private fun setupSectionsRecycler() {
+    private fun setupSubCategoriesRecycler() {
         subCategoriesRecycler = CategorySectionsRecyclerAdapter (resources, {
 
         },{
