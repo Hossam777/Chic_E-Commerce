@@ -9,8 +9,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.app.chic_ecommerce.R
 import com.app.chic_ecommerce.common.data.Session
+import com.app.chic_ecommerce.common.data.entities.Color
 import com.app.chic_ecommerce.common.data.entities.SliderItemModel
-import com.app.chic_ecommerce.common.data.mockup.colors
 import com.app.chic_ecommerce.common.presentation.SliderPagerAdapter
 import com.app.chic_ecommerce.databinding.ActivityProductBinding
 import org.kodein.di.KodeinAware
@@ -34,61 +34,65 @@ class ProductActivity : AppCompatActivity(), KodeinAware {
         //intent.getBundleExtra("")
 
         setupView()
-        subscribeOnSession()
-        setupAdapter()
+        subscribeOnCart()
+        subscribeOnFocusedProduct()
     }
 
     private fun setupView() {
         binding.addToCartBtn.setOnClickListener {
-            Toast.makeText(this, "Add To Cart", Toast.LENGTH_SHORT).show()
+            TODO("Add Product To Cart")
         }
         binding.backBtn.setOnClickListener {
             finish()
         }
         binding.favBtn.setOnClickListener {
-            Toast.makeText(this, "Fav Clicked", Toast.LENGTH_SHORT).show()
+            TODO("Add Product To Wishlist")
         }
-        binding.productName.text = "Wool Blend Cream Coat"
-        binding.productPrice.text = "$134"
-        binding.descriptionTxt.text = "Perfect autumn wool coat, created by Italian brand Woolissima, will make you feel warm and look chic."
-        val sizes: MutableList<String> = mutableListOf(
-            "S",
-            "M",
-            "X",
-            "2X",
-        )
-        val adapter = ArrayAdapter(this, R.layout.sizes_spinner_item, sizes)
-        binding.sizesSpinner.adapter = adapter
-        val sliderItems: MutableList<SliderItemModel> = mutableListOf()
-        sliderItems.add(SliderItemModel(
-            "https://i.pinimg.com/564x/c3/dc/38/c3dc38a87605e7d1b99a53bbc336e829.jpg",
-            ""))
-        sliderItems.add(SliderItemModel(
-            "https://i.pinimg.com/236x/86/8a/05/868a051c9b452576e18514e5ef83060b.jpg",
-            ""))
-        sliderItems.add(SliderItemModel(
-            "https://i.pinimg.com/236x/d6/6a/33/d66a338b05d71ca13e1367aa1ac1bf74.jpg",
-            ""))
-        sliderItems.add(SliderItemModel(
-            "https://i.pinimg.com/236x/7f/c6/6d/7fc66da657be0077579d890213ebfa64.jpg",
-            ""))
-        val sliderPagerAdapter = SliderPagerAdapter(this, sliderItems, true)
-        binding.viewPager.adapter = sliderPagerAdapter
-        binding.tabLayout.setupWithViewPager(binding.viewPager, true)
+
     }
 
-    private fun subscribeOnSession() {
-        session.cart.observe(this, {
-
+    private fun subscribeOnFocusedProduct() {
+        session.focusedProduct.observe(this, { product ->
+            binding.productName.text = product.name
+            binding.productPrice.text = product.price.toString()
+            binding.descriptionTxt.text = product.description
+            //slider adapter
+            val sizes: MutableList<String> = mutableListOf()
+            product.sizes.split(";").forEach {
+                sizes.add(it)
+            }
+            val adapter = ArrayAdapter(this, R.layout.sizes_spinner_item, sizes)
+            binding.sizesSpinner.adapter = adapter
+            val sliderItems: MutableList<SliderItemModel> = mutableListOf()
+            sliderItems.add(SliderItemModel(
+                product.image1,
+                ""))
+            sliderItems.add(SliderItemModel(
+                product.image2,
+                ""))
+            sliderItems.add(SliderItemModel(
+                product.image3,
+                ""))
+            val sliderPagerAdapter = SliderPagerAdapter(this, sliderItems, true)
+            binding.viewPager.adapter = sliderPagerAdapter
+            binding.tabLayout.setupWithViewPager(binding.viewPager, true)
+            //colors adapter
+            val colors: MutableList<Color> = mutableListOf()
+            product.colors.split(";").forEach {
+                colors.add(Color(it.split(":")[0], it.split(":")[1]))
+            }
+            colorsRecyclerAdapter = ColorsRecyclerAdapter(this, resources){
+                viewModel.selectedColor.postValue(it.name)
+            }
+            colorsRecyclerAdapter.setColors(colors)
+            binding.colorsRecycler.adapter = colorsRecyclerAdapter
+            binding.colorsRecycler.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         })
     }
 
-    private fun setupAdapter() {
-        colorsRecyclerAdapter = ColorsRecyclerAdapter(this, resources){
-
-        }
-        colorsRecyclerAdapter.setColors(colors)
-        binding.colorsRecycler.adapter = colorsRecyclerAdapter
-        binding.colorsRecycler.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+    private fun subscribeOnCart() {
+        session.cart.observe(this, {
+            binding.cartCounter.text = it.size.toString()
+        })
     }
 }

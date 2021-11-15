@@ -20,7 +20,7 @@ import org.kodein.di.generic.instance
 
 class ShopProductsCategoryFragment : Fragment(), KodeinAware {
     override val kodein by kodein()
-    private val viewmodel: ShopProductsCategoryViewModel by instance()
+    private val viewModel: ShopProductsCategoryViewModel by instance()
     private val session: Session by instance()
     private lateinit var binding: FragmentShopProductsCategoryBinding
     private lateinit var subCategoriesRecycler: CategorySectionsRecyclerAdapter
@@ -32,12 +32,12 @@ class ShopProductsCategoryFragment : Fragment(), KodeinAware {
     ): View {
         session.currentFragment.postValue(FragmentsEnum.ShopProductsCategoryFragment)
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_shop_products_category, container, false)
-        binding.viewmodel = viewmodel
+        binding.viewmodel = viewModel
         binding.lifecycleOwner = this
-        viewmodel.category.postValue(arguments?.getString("category")!!)
+        viewModel.category.postValue(arguments?.getString("category")!!)
 
-        viewmodel.getSubCategories()
-        viewmodel.getProductsByFilter()
+        viewModel.getSubCategories()
+        viewModel.getProductsByFilter()
         subscribeOnError()
         subscribeOnSubCategories()
         subscribeOnProducts()
@@ -47,19 +47,19 @@ class ShopProductsCategoryFragment : Fragment(), KodeinAware {
     }
 
     private fun subscribeOnProducts() {
-        viewmodel.products.observe(viewLifecycleOwner, {
+        viewModel.products.observe(viewLifecycleOwner, {
             shopProductsAdapter.setShopList(it)
         })
     }
 
     private fun subscribeOnSubCategories() {
-        viewmodel.subCategories.observe(viewLifecycleOwner, {
+        viewModel.subCategories.observe(viewLifecycleOwner, {
             subCategoriesRecycler.setSections(it)
         })
     }
 
     private fun subscribeOnError() {
-        viewmodel.onError.observe(viewLifecycleOwner, {
+        viewModel.onError.observe(viewLifecycleOwner, {
             Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
         })
     }
@@ -80,9 +80,9 @@ class ShopProductsCategoryFragment : Fragment(), KodeinAware {
 
     private fun setupSubCategoriesRecycler() {
         subCategoriesRecycler = CategorySectionsRecyclerAdapter (resources, {
-
+            TODO("Add SubCategory To Filter")
         },{
-
+            TODO("Remove SubCategory To Filter")
         })
         binding.sectionsRecycler.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         binding.sectionsRecycler.adapter = subCategoriesRecycler

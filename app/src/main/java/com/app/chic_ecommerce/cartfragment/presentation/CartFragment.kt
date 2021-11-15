@@ -6,12 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.app.chic_ecommerce.R
 import com.app.chic_ecommerce.common.data.Session
 import com.app.chic_ecommerce.common.data.entities.FragmentsEnum
-import com.app.chic_ecommerce.common.data.mockup.cartProducts
 import com.app.chic_ecommerce.databinding.FragmentCartBinding
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
@@ -35,7 +33,7 @@ class CartFragment : Fragment(), KodeinAware {
         binding.lifecycleOwner = this
 
         setupAdapter()
-        subscribeOnSession()
+        subscribeOnCart()
         return binding.root
     }
 
@@ -53,12 +51,11 @@ class CartFragment : Fragment(), KodeinAware {
         }, {
             TODO("RemoveProduct")
         })
-        cartAdapter.setCartList(cartProducts)
         binding.cartRecycler.adapter = cartAdapter
         binding.cartRecycler.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
     }
 
-    private fun subscribeOnSession() {
+    private fun subscribeOnCart() {
         session.cart.observe(viewLifecycleOwner, {
             if(session.cart.value != null){
                 cartAdapter.setCartList(it)

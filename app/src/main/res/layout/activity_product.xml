@@ -216,6 +216,7 @@
                 android:textColor="@color/pallet_white"
                 android:textStyle="bold"
                 android:hint="@string/qnt"
+                android:text="1"
                 android:textColorHint="@color/pallet_grey4"
                 android:inputType="text"
                 android:maxLines="1"

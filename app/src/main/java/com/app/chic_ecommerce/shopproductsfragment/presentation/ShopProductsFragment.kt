@@ -20,7 +20,7 @@ import org.kodein.di.generic.instance
 
 class ShopProductsFragment : Fragment(), KodeinAware {
     override val kodein by kodein()
-    private val viewmodel: ShopProductsFragmentViewModel by instance()
+    private val viewModel: ShopProductsFragmentViewModel by instance()
     private val session: Session by instance()
     private lateinit var binding: FragmentShopProductsBinding
     private lateinit var shopListCategoriesRecyclerAdapter: ShopListCategoriesRecyclerAdapter
@@ -31,10 +31,10 @@ class ShopProductsFragment : Fragment(), KodeinAware {
     ): View {
         session.currentFragment.postValue(FragmentsEnum.ShopProductsFragment)
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_shop_products, container, false)
-        binding.viewmodel = viewmodel
+        binding.viewmodel = viewModel
         binding.lifecycleOwner = this
 
-        viewmodel.getCategories()
+        viewModel.getCategories()
         subscribeOnError()
         subscribeOnCategories()
         setupAdapter()
@@ -42,13 +42,13 @@ class ShopProductsFragment : Fragment(), KodeinAware {
     }
 
     private fun subscribeOnCategories() {
-        viewmodel.categories.observe(viewLifecycleOwner, {
+        viewModel.categories.observe(viewLifecycleOwner, {
             shopListCategoriesRecyclerAdapter.setCategories(it)
         })
     }
 
     private fun subscribeOnError() {
-        viewmodel.onError.observe(viewLifecycleOwner, {
+        viewModel.onError.observe(viewLifecycleOwner, {
             Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
         })
     }

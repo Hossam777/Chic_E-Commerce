@@ -19,7 +19,7 @@ import org.kodein.di.generic.instance
 
 class ProfileFragment : Fragment(), KodeinAware {
     override val kodein by kodein()
-    private val viewmodel: ProfileFragmentViewModel by instance()
+    private val viewModel: ProfileFragmentViewModel by instance()
     private val session: Session by instance()
     private lateinit var binding: FragmentProfileBinding
 
@@ -28,7 +28,7 @@ class ProfileFragment : Fragment(), KodeinAware {
         savedInstanceState: Bundle?
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_profile, container, false)
-        binding.viewmodel = viewmodel
+        binding.viewmodel = viewModel
         binding.session = session
         binding.lifecycleOwner = this
 

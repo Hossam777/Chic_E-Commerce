@@ -7,21 +7,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
-import androidx.viewpager.widget.ViewPager
 import com.app.chic_ecommerce.R
 import com.app.chic_ecommerce.common.data.Session
 import com.app.chic_ecommerce.common.data.entities.FragmentsEnum
 import com.app.chic_ecommerce.common.data.entities.SliderItemModel
 import com.app.chic_ecommerce.common.presentation.SliderPagerAdapter
 import com.app.chic_ecommerce.databinding.FragmentHomeBinding
-import com.google.android.material.tabs.TabLayout
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
 import org.kodein.di.generic.instance
 
 class HomeFragment : Fragment(), KodeinAware {
     override val kodein by kodein()
-    private val viewmodel: HomeFragmentViewModel by instance()
+    private val viewModel: HomeFragmentViewModel by instance()
     private val session: Session by instance()
     private lateinit var binding: FragmentHomeBinding
 
@@ -31,7 +29,7 @@ class HomeFragment : Fragment(), KodeinAware {
     ): View {
         session.currentFragment.postValue(FragmentsEnum.HomeFragment)
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
-        binding.viewmodel = viewmodel
+        binding.viewmodel = viewModel
         binding.lifecycleOwner = this
 
         setupView()

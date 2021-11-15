@@ -18,7 +18,7 @@ import org.kodein.di.generic.instance
 
 class WishlistFragment : Fragment(), KodeinAware {
     override val kodein by kodein()
-    private val viewmodel: WishlistFragmentViewModel by instance()
+    private val viewModel: WishlistFragmentViewModel by instance()
     private val session: Session by instance()
     private lateinit var binding: FragmentWishlistBinding
     private lateinit var wishlistAdapter: WishlistRecyclerAdapter
@@ -29,11 +29,11 @@ class WishlistFragment : Fragment(), KodeinAware {
     ): View {
         session.currentFragment.postValue(FragmentsEnum.WishlistFragment)
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_wishlist, container, false)
-        binding.viewmodel = viewmodel
+        binding.viewmodel = viewModel
         binding.lifecycleOwner = this
 
         setupAdapter()
-        subscribeOnSession()
+        subscribeOnWishlist()
         return binding.root
     }
 
@@ -49,12 +49,11 @@ class WishlistFragment : Fragment(), KodeinAware {
         }, {
             TODO("AddToCart")
         })
-        wishlistAdapter.setWishlist(products)
         binding.wishlistRecycler.adapter = wishlistAdapter
         binding.wishlistRecycler.layoutManager = GridLayoutManager(context, 2)
     }
 
-    private fun subscribeOnSession() {
+    private fun subscribeOnWishlist() {
         session.wishlist.observe(viewLifecycleOwner, {
             if(session.cart.value != null){
                 wishlistAdapter.setWishlist(it)

@@ -6,7 +6,6 @@ import com.app.chic_ecommerce.common.data.entities.CartProduct
 import com.app.chic_ecommerce.common.data.entities.FragmentsEnum
 import com.app.chic_ecommerce.common.data.entities.Product
 import com.app.chic_ecommerce.common.data.entities.User
-import com.app.chic_ecommerce.common.data.mockup.cartProducts
 
 class Session {
     private lateinit var activity: Activity
@@ -53,7 +52,7 @@ class Session {
 
     fun saveCart (){
         var txt = ""
-        for (p in cartProducts.listIterator()){
+        for (p in cart.value!!.listIterator()){
             txt += "$p|"
         }
         txt = txt.subSequence(0, txt.length - 1) as String
@@ -69,5 +68,29 @@ class Session {
             }
             cart.postValue(list)
         }
+    }
+
+    fun addWishlistProduct(product: Product){
+        TODO("ADD Wishlist Product")
+    }
+
+    fun removeWishlistProduct(product: Product){
+        TODO("ADD Wishlist Product")
+    }
+
+    fun addCartProduct(product: Product){
+        TODO("ADD Cart Product")
+    }
+
+    fun removeCartProduct(product: Product){
+        TODO("ADD Cart Product")
+    }
+
+    fun addCartProductQuantity(product: Product){
+        TODO("ADD Cart Product Quantity")
+    }
+
+    fun removeCartProductQuantity(product: Product){
+        TODO("ADD Cart Product Quantity")
     }
 }
