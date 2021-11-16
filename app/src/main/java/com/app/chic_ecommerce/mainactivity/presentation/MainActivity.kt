@@ -33,7 +33,18 @@ class MainActivity : AppCompatActivity(), KodeinAware {
         session.loadCart()
         subscribeOnToken()
         subscribeOnUser()
+        subscribeOnLoading()
         subscribeOnError()
+    }
+
+    private fun subscribeOnLoading() {
+        viewModel.onLoading.observe(this, {
+            if(it){
+                binding.loadingLayout.visibility = View.VISIBLE
+            }else{
+                binding.loadingLayout.visibility = View.INVISIBLE
+            }
+        })
     }
 
     private fun subscribeOnToken() {

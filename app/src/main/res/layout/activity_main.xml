@@ -8,13 +8,15 @@
             name="viewmodel"
             type="com.app.chic_ecommerce.mainactivity.presentation.MainActivityViewModel" />
     </data>
-
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".mainactivity.presentation.MainActivity">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/pallet_black"
-        android:padding="0dp"
-        tools:context=".mainactivity.presentation.MainActivity">
+        android:padding="0dp">
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -47,7 +49,6 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/signupBtn"
         app:layout_constraintBottom_toBottomOf="parent"/>
-
         <Button
             android:id="@+id/signupBtn"
             android:layout_width="0dp"
@@ -64,5 +65,9 @@
             app:layout_constraintLeft_toRightOf="@+id/loginBtn"
             app:layout_constraintRight_toRightOf="parent"
             tools:ignore="TextContrastCheck" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+        <include
+            android:id="@+id/loadingLayout"
+            layout="@layout/loading_screen" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
