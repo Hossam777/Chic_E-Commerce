@@ -1,5 +1,6 @@
 package com.app.chic_ecommerce.wishlistfragment.presentation
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -12,6 +13,7 @@ import com.app.chic_ecommerce.common.data.Session
 import com.app.chic_ecommerce.common.data.entities.FragmentsEnum
 import com.app.chic_ecommerce.common.data.mockup.products
 import com.app.chic_ecommerce.databinding.FragmentWishlistBinding
+import com.app.chic_ecommerce.productactivity.presentation.ProductActivity
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
 import org.kodein.di.generic.instance
@@ -47,7 +49,8 @@ class WishlistFragment : Fragment(), KodeinAware {
         wishlistAdapter = WishlistRecyclerAdapter({
             session.removeWishlistProduct(it)
         }, {
-            session.addWishlistProduct(it)
+            session.focusedProduct.postValue(it)
+            startActivity(Intent(context, ProductActivity::class.java))
         })
         binding.wishlistRecycler.adapter = wishlistAdapter
         binding.wishlistRecycler.layoutManager = GridLayoutManager(context, 2)

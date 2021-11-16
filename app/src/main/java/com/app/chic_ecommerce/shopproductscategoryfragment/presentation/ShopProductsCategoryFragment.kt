@@ -43,9 +43,16 @@ class ShopProductsCategoryFragment : Fragment(), KodeinAware {
         subscribeOnError()
         subscribeOnSubCategories()
         subscribeOnProducts()
+        subscribeOnSelectedSubCategories()
         setupSubCategoriesRecycler()
         setupShopProductsRecycler()
         return binding.root
+    }
+
+    private fun subscribeOnSelectedSubCategories() {
+        viewModel.selectedSubCategories.observe(viewLifecycleOwner, {
+            Toast.makeText(context, it.toString(), Toast.LENGTH_SHORT).show()
+        })
     }
 
     private fun subscribeOnProducts() {
@@ -83,9 +90,13 @@ class ShopProductsCategoryFragment : Fragment(), KodeinAware {
 
     private fun setupSubCategoriesRecycler() {
         subCategoriesRecycler = CategorySectionsRecyclerAdapter (resources, {
-            TODO("Add SubCategory To Filter")
+            val list = viewModel.selectedSubCategories.value
+            list!!.add(it)
+            viewModel.selectedSubCategories.postValue(list)
         },{
-            TODO("Remove SubCategory To Filter")
+            val list = viewModel.selectedSubCategories.value
+            list!!.remove(it)
+            viewModel.selectedSubCategories.postValue(list)
         })
         binding.sectionsRecycler.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         binding.sectionsRecycler.adapter = subCategoriesRecycler

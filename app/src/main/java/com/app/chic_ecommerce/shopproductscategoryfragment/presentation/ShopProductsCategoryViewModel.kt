@@ -17,6 +17,7 @@ class ShopProductsCategoryViewModel (
     var subCategories: MutableLiveData<MutableList<SubCategory>> = MutableLiveData()
     var products: MutableLiveData<MutableList<Product>> = MutableLiveData()
     var onError: MutableLiveData<String> = MutableLiveData()
+    var selectedSubCategories: MutableLiveData<MutableList<SubCategory>> = MutableLiveData(mutableListOf())
 
     fun getSubCategories(){
         getSubCategoriesRepository.fetchGetCategories()

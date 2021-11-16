@@ -8,7 +8,7 @@ import com.app.chic_ecommerce.databinding.RecyclerWishlistBinding
 import com.squareup.picasso.Picasso
 
 class WishlistRecyclerAdapter(private val onRemove: (product: Product) -> Unit,
-                               private val onAddToCart: (product: Product) -> Unit):
+                               private val onOpenProduct: (product: Product) -> Unit):
     RecyclerView.Adapter<WishlistRecyclerAdapter.WishlistRecyclerHolder>() {
     private var wishlist: MutableList<Product> = mutableListOf()
     fun setWishlist(wishlist: MutableList<Product>) {
@@ -24,7 +24,7 @@ class WishlistRecyclerAdapter(private val onRemove: (product: Product) -> Unit,
 
     override fun onBindViewHolder(holder: WishlistRecyclerHolder, position: Int) {
         Picasso.get().load(wishlist[position].image1).into(holder.binding.productImg)
-        holder.binding.addToCart.setOnClickListener { onAddToCart(wishlist[position]) }
+        holder.binding.productLayout.setOnClickListener { onOpenProduct(wishlist[position]) }
         holder.binding.closeBtn.setOnClickListener { onRemove(wishlist[position]) }
         holder.binding.productName.text = wishlist[position].name
         holder.binding.productPrice.text = "$" + wishlist[position].price

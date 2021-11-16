@@ -8,7 +8,7 @@ import com.app.chic_ecommerce.R
 import com.app.chic_ecommerce.databinding.RecyclerCatgorySectionsBinding
 import com.app.chic_ecommerce.shopproductscategoryfragment.data.entities.SubCategory
 
-class CategorySectionsRecyclerAdapter (val resources: Resources, val onItemAdded:(String)->Unit, val onItemRemoved:(String)->Unit)
+class CategorySectionsRecyclerAdapter (val resources: Resources, val onItemAdded:(SubCategory)->Unit, val onItemRemoved:(SubCategory)->Unit)
     : RecyclerView.Adapter<CategorySectionsRecyclerAdapter.CategorySectionsRecyclerViewHolder>() {
     private var subCategories: MutableList<SubCategory> = mutableListOf()
     private var selectedSubCategories: MutableList<String> = mutableListOf()
@@ -36,13 +36,13 @@ class CategorySectionsRecyclerAdapter (val resources: Resources, val onItemAdded
                 //add section
                 holder.binding.sectionText.background = resources.getDrawable(R.drawable.category_section_selected_bg)
                 selectedSubCategories.add(subCategories[position].name)
-                onItemAdded(subCategories[position].name)
+                onItemAdded(subCategories[position])
                 notifyItemMoved(holder.bindingAdapterPosition, 0)
             }else{
                 //remove section
                 holder.binding.sectionText.background = resources.getDrawable(R.drawable.category_section_bg)
                 selectedSubCategories.remove(subCategories[position].name)
-                onItemRemoved(subCategories[position].name)
+                onItemRemoved(subCategories[position])
                 notifyItemMoved(holder.bindingAdapterPosition, selectedSubCategories.size)
             }
         }

@@ -50,7 +50,8 @@ class Session {
         val txt = sharedPreferences.readString(activity, "wishlist")
         if(txt != ""){
             txt.split("|").listIterator().forEach{
-                list.add(Product(it.split(",")))
+                val arr = it.split(",")
+                list.add(Product(arr[0], arr[1], arr[2], arr[3], arr[4], arr[5].toDouble(), arr[6].toInt(), arr[7], arr[8], arr[9], arr[10], arr[11]))
             }
             wishlist.postValue(list)
         }
@@ -74,7 +75,8 @@ class Session {
         val txt = sharedPreferences.readString(activity, "cart")
         if (txt != ""){
             txt.split("|").listIterator().forEach{
-                list.add(CartProduct(it.split(",")))
+                val arr = it.split(",")
+                list.add(CartProduct(arr[0], arr[1], arr[2], arr[3], arr[4], arr[5].toDouble(), arr[6].toInt()))
             }
             cart.postValue(list)
         }
