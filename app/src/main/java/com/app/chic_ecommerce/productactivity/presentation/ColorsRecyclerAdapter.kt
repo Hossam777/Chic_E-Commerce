@@ -17,7 +17,7 @@ import com.app.chic_ecommerce.databinding.RecyclerColorsBinding
 class ColorsRecyclerAdapter(private val owner: LifecycleOwner, private val resources: Resources, private val onColorClicked: (color: Color) -> Unit):
     RecyclerView.Adapter<ColorsRecyclerAdapter.ColorsRecyclerHolder>() {
     private var colors: MutableList<Color> = mutableListOf()
-    private var selectedColor: MutableLiveData<String> = MutableLiveData()
+    private var selectedColor: MutableLiveData<Color> = MutableLiveData()
 
     fun setColors(colors: MutableList<Color>) {
         this.colors = colors
@@ -34,17 +34,17 @@ class ColorsRecyclerAdapter(private val owner: LifecycleOwner, private val resou
         @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
         holder.binding.colorBtn.backgroundTintList = ColorStateList.valueOf(android.graphics.Color.parseColor(colors[position].code))
         holder.binding.colorBtn.setOnClickListener {
-            selectedColor.postValue(colors[position].name)
+            selectedColor.postValue(colors[position])
+            onColorClicked(colors[position])
         }
         selectedColor.observe(owner, {
-            if(it == colors[position].name){
+            if(it.name == colors[position].name){
                 @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
                 holder.binding.colorBorder.backgroundTintList = resources.getColorStateList(R.color.pallet_black)
             }else{
                 @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
                 holder.binding.colorBorder.backgroundTintList = resources.getColorStateList(R.color.transparent)
             }
-            onColorClicked(colors[position])
         })
     }
 

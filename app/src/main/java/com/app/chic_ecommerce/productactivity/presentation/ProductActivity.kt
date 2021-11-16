@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.app.chic_ecommerce.R
 import com.app.chic_ecommerce.common.data.Session
+import com.app.chic_ecommerce.common.data.entities.CartProduct
 import com.app.chic_ecommerce.common.data.entities.Color
 import com.app.chic_ecommerce.common.data.entities.SliderItemModel
 import com.app.chic_ecommerce.common.presentation.SliderPagerAdapter
@@ -38,7 +39,18 @@ class ProductActivity : AppCompatActivity(), KodeinAware {
 
     private fun setupView() {
         binding.addToCartBtn.setOnClickListener {
-            TODO("Add Product To Cart")
+            if(binding.quantityTxt.text.toString().isEmpty() || binding.quantityTxt.text.toString().toInt() < 1 || binding.quantityTxt.text.toString().toInt() > 9){
+                Toast.makeText(this, "invalid Quantity or too many", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            if (viewModel.selectedColor.value == null){
+                Toast.makeText(this, "select color", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            session.addCartProduct(CartProduct(session.focusedProduct.value!!.id, session.focusedProduct.value!!.name
+                , session.focusedProduct.value!!.image1, binding.sizesSpinner.selectedItem.toString()
+                , viewModel.selectedColor.value!!.name.toString(), session.focusedProduct.value!!.price
+                , binding.quantityTxt.text.toString().toInt()))
         }
         binding.backBtn.setOnClickListener {
             finish()
@@ -90,7 +102,7 @@ class ProductActivity : AppCompatActivity(), KodeinAware {
                     colors.add(Color(it.split(":")[0], it.split(":")[1]))
             }
             colorsRecyclerAdapter = ColorsRecyclerAdapter(this, resources){
-                viewModel.selectedColor.postValue(it.name)
+                viewModel.selectedColor.postValue(it)
             }
             colorsRecyclerAdapter.setColors(colors)
             binding.colorsRecycler.adapter = colorsRecyclerAdapter

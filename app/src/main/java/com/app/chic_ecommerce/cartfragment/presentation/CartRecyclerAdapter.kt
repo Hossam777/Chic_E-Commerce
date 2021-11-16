@@ -29,12 +29,10 @@ class CartRecyclerAdapter(private val onRemove: (product: CartProduct) -> Unit,
         Picasso.get().load(cartList[position].image).into(holder.binding.productImg)
         holder.binding.addOneProductBtn.setOnClickListener {
             onAddOneQuantity(cartList[position])
-            holder.binding.productQuantity.text = (cartList[position].quantity + 1).toString()
         }
         holder.binding.removeOneProductBtn.setOnClickListener {
             if(holder.binding.productQuantity.text != "1"){
                 onRemoveOneQuantity(cartList[position])
-                holder.binding.productQuantity.text = (cartList[position].quantity - 1).toString()
             }
         }
         holder.binding.removeProductBtn.setOnClickListener { onRemove(cartList[position]) }

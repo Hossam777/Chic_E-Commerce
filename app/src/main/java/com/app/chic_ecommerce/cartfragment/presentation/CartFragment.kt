@@ -34,6 +34,7 @@ class CartFragment : Fragment(), KodeinAware {
 
         setupAdapter()
         subscribeOnCart()
+        subscribeOnPromoCode()
         return binding.root
     }
 
@@ -45,21 +46,34 @@ class CartFragment : Fragment(), KodeinAware {
 
     private fun setupAdapter() {
         cartAdapter = CartRecyclerAdapter({
-            TODO("AddQuantity")
+            session.removeCartProduct(it)
         }, {
-            TODO("RemoveQuantity")
+            session.addCartProductQuantity(it)
         }, {
-            TODO("RemoveProduct")
+            session.removeCartProductQuantity(it)
         })
         binding.cartRecycler.adapter = cartAdapter
         binding.cartRecycler.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
     }
 
     private fun subscribeOnCart() {
-        session.cart.observe(viewLifecycleOwner, {
+        session.cart.observe(viewLifecycleOwner, { list ->
             if(session.cart.value != null){
-                cartAdapter.setCartList(it)
+                cartAdapter.setCartList(list)
+                var totalPrice = 0.0
+                list.forEach {
+                    totalPrice += it.quantity * it.price
+                }
+                binding.totalPriceTxt.text = "$" + totalPrice
             }
+        })
+    }
+    private fun subscribeOnPromoCode() {
+        viewModel.promoCode.observe(viewLifecycleOwner, {
+            if (it == "")
+                binding.promoCodeValidationMessage.text = ""
+            else
+                binding.promoCodeValidationMessage.text = "PromoCode is Invalid"
         })
     }
 }

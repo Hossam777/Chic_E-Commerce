@@ -32,7 +32,7 @@ class Session {
         token.postValue(this.sharedPreferences.readString(activity, "token"))
     }
 
-    fun saveWishlist (){
+    private fun saveWishlist (){
         var txt = ""
         if(wishlist.value!!.isEmpty()){
             sharedPreferences.writeString(activity, "wishlist", txt)
@@ -92,10 +92,10 @@ class Session {
         return -1
     }
 
-    fun findInCart(product: CartProduct): Int {
+    private fun findInCart(product: CartProduct): Int {
         var index = 0
         cart.value!!.forEach {
-            if(it.id == product.id)
+            if(it.id == product.id && it.color == product.color)
                 return index
             index++
         }
@@ -129,12 +129,14 @@ class Session {
         if(index != -1){
             val item = list!![index]
             list.removeAt(index)
-            list.add(CartProduct(item.id, item.name, item.image, item.size, item.color, item.price, item.quantity + product.quantity))
+            list.add(index, CartProduct(item.id, item.name, item.image, item.size, item.color, item.price, item.quantity + product.quantity))
             cart.postValue(list)
+            saveCart()
             return true
         }
         list!!.add(product)
         cart.postValue(list)
+        saveCart()
         return true
     }
 
@@ -145,6 +147,7 @@ class Session {
         val list = cart.value
         list!!.removeAt(index)
         cart.postValue(list)
+        saveCart()
         return true
     }
 
@@ -155,8 +158,9 @@ class Session {
         val list = cart.value
         val item = list!![index]
         list.removeAt(index)
-        list.add(CartProduct(item.id, item.name, item.image, item.size, item.color, item.price, item.quantity + 1))
+        list.add(index, CartProduct(item.id, item.name, item.image, item.size, item.color, item.price, item.quantity + 1))
         cart.postValue(list)
+        saveCart()
         return true
     }
 
@@ -171,6 +175,7 @@ class Session {
             list.add(CartProduct(item.id, item.name, item.image, item.size, item.color, item.price, item.quantity - 1))
         }
         cart.postValue(list)
+        saveCart()
         return true
     }
 }
