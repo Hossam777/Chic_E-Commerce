@@ -95,7 +95,7 @@ class Session {
     private fun findInCart(product: CartProduct): Int {
         var index = 0
         cart.value!!.forEach {
-            if(it.id == product.id && it.color == product.color)
+            if(it.id == product.id && it.color == product.color && it.size == product.size)
                 return index
             index++
         }
