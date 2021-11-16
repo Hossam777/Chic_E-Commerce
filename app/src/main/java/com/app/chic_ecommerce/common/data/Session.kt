@@ -1,6 +1,8 @@
 package com.app.chic_ecommerce.common.data
 
 import android.app.Activity
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.MutableLiveData
 import com.app.chic_ecommerce.common.data.entities.CartProduct
 import com.app.chic_ecommerce.common.data.entities.FragmentsEnum
@@ -32,6 +34,10 @@ class Session {
 
     fun saveWishlist (){
         var txt = ""
+        if(wishlist.value!!.isEmpty()){
+            sharedPreferences.writeString(activity, "wishlist", txt)
+            return
+        }
         for (p in wishlist.value!!.listIterator()){
             txt += "$p|"
         }
@@ -52,6 +58,10 @@ class Session {
 
     fun saveCart (){
         var txt = ""
+        if(cart.value!!.isEmpty()){
+            sharedPreferences.writeString(activity, "cart", txt)
+            return
+        }
         for (p in cart.value!!.listIterator()){
             txt += "$p|"
         }
@@ -70,27 +80,95 @@ class Session {
         }
     }
 
-    fun addWishlistProduct(product: Product){
-        TODO("ADD Wishlist Product")
+    fun findInWishlist(product: Product): Int {
+        var index = 0
+        wishlist.value!!.forEach {
+            if(it.id == product.id)
+                return index
+            index++
+        }
+        return -1
     }
 
-    fun removeWishlistProduct(product: Product){
-        TODO("ADD Wishlist Product")
+    fun findInCart(product: CartProduct): Int {
+        var index = 0
+        cart.value!!.forEach {
+            if(it.id == product.id)
+                return index
+            index++
+        }
+        return -1
     }
 
-    fun addCartProduct(product: Product){
-        TODO("ADD Cart Product")
+    fun addWishlistProduct(product: Product): Boolean {
+        if(findInWishlist(product) != -1)
+            return false
+        val list = wishlist.value
+        list!!.add(product)
+        wishlist.postValue(list)
+        saveWishlist()
+        return true
     }
 
-    fun removeCartProduct(product: Product){
-        TODO("ADD Cart Product")
+    fun removeWishlistProduct(product: Product): Boolean {
+        val index = findInWishlist(product)
+        if(index == -1)
+            return false
+        val list = wishlist.value
+        list!!.removeAt(index)
+        wishlist.postValue(list)
+        saveWishlist()
+        return true
     }
 
-    fun addCartProductQuantity(product: Product){
-        TODO("ADD Cart Product Quantity")
+    fun addCartProduct(product: CartProduct): Boolean {
+        val index = findInCart(product)
+        val list = cart.value
+        if(index != -1){
+            val item = list!![index]
+            list.removeAt(index)
+            list.add(CartProduct(item.id, item.name, item.image, item.size, item.color, item.price, item.quantity + product.quantity))
+            cart.postValue(list)
+            return true
+        }
+        list!!.add(product)
+        cart.postValue(list)
+        return true
     }
 
-    fun removeCartProductQuantity(product: Product){
-        TODO("ADD Cart Product Quantity")
+    fun removeCartProduct(product: CartProduct): Boolean {
+        val index = findInCart(product)
+        if(index == -1)
+            return false
+        val list = cart.value
+        list!!.removeAt(index)
+        cart.postValue(list)
+        return true
+    }
+
+    fun addCartProductQuantity(product: CartProduct): Boolean {
+        val index = findInCart(product)
+        if(index == -1)
+            return false
+        val list = cart.value
+        val item = list!![index]
+        list.removeAt(index)
+        list.add(CartProduct(item.id, item.name, item.image, item.size, item.color, item.price, item.quantity + 1))
+        cart.postValue(list)
+        return true
+    }
+
+    fun removeCartProductQuantity(product: CartProduct): Boolean {
+        val index = findInCart(product)
+        if(index == -1)
+            return false
+        val list = cart.value
+        val item = list!![index]
+        list.removeAt(index)
+        if (item.quantity != 1){
+            list.add(CartProduct(item.id, item.name, item.image, item.size, item.color, item.price, item.quantity - 1))
+        }
+        cart.postValue(list)
+        return true
     }
 }

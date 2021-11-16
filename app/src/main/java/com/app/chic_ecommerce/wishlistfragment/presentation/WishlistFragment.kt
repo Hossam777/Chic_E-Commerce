@@ -45,9 +45,9 @@ class WishlistFragment : Fragment(), KodeinAware {
 
     private fun setupAdapter() {
         wishlistAdapter = WishlistRecyclerAdapter({
-            TODO("RemoveFromWishlist")
+            session.removeWishlistProduct(it)
         }, {
-            TODO("AddToCart")
+            session.addWishlistProduct(it)
         })
         binding.wishlistRecycler.adapter = wishlistAdapter
         binding.wishlistRecycler.layoutManager = GridLayoutManager(context, 2)

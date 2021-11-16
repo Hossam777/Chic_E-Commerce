@@ -1,5 +1,6 @@
 package com.app.chic_ecommerce.shopproductscategoryfragment.presentation
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -13,6 +14,7 @@ import com.app.chic_ecommerce.R
 import com.app.chic_ecommerce.common.data.Session
 import com.app.chic_ecommerce.common.data.entities.FragmentsEnum
 import com.app.chic_ecommerce.databinding.FragmentShopProductsCategoryBinding
+import com.app.chic_ecommerce.productactivity.presentation.ProductActivity
 import com.project.ecommerce.shopfragmentlayer3.presentation.adapters.CategorySectionsRecyclerAdapter
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
@@ -72,7 +74,8 @@ class ShopProductsCategoryFragment : Fragment(), KodeinAware {
 
     private fun setupShopProductsRecycler() {
         shopProductsAdapter = ShopProductsRecyclerAdapter(){
-            TODO("open Product")
+            session.focusedProduct.postValue(it)
+            startActivity(Intent(context, ProductActivity::class.java))
         }
         binding.shopListRecycler.adapter = shopProductsAdapter
         binding.shopListRecycler.layoutManager = GridLayoutManager(context, 2)

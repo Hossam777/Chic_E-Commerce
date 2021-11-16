@@ -7,12 +7,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.commit
 import com.app.chic_ecommerce.R
 import com.app.chic_ecommerce.common.data.Session
+import com.app.chic_ecommerce.common.data.entities.CartProduct
 import com.app.chic_ecommerce.common.data.entities.FragmentsEnum
+import com.app.chic_ecommerce.common.data.entities.Product
 import com.app.chic_ecommerce.common.data.entities.SliderItemModel
 import com.app.chic_ecommerce.common.presentation.SliderPagerAdapter
 import com.app.chic_ecommerce.databinding.FragmentHomeBinding
+import com.app.chic_ecommerce.shopproductscategoryfragment.presentation.ShopProductsCategoryFragment
+import com.app.chic_ecommerce.wishlistfragment.presentation.WishlistFragment
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
 import org.kodein.di.generic.instance
@@ -32,6 +37,7 @@ class HomeFragment : Fragment(), KodeinAware {
         binding.viewmodel = viewModel
         binding.lifecycleOwner = this
 
+        onClick()
         setupView()
         return binding.root
     }
@@ -71,4 +77,25 @@ class HomeFragment : Fragment(), KodeinAware {
         binding.viewPager.adapter = sliderPagerAdapter
         binding.tabLayout.setupWithViewPager(binding.viewPager, true)
     }
+
+    private fun onClick() {
+        binding.saleShop.setOnClickListener{ openShopCategoryFragment("Sale%") }
+        binding.saleShopLayout.setOnClickListener{ openShopCategoryFragment("Sale%") }
+        binding.shopBtn.setOnClickListener{ openShopCategoryFragment("Sale%") }
+        binding.cashmereSilkShop.setOnClickListener{ openShopCategoryFragment("Cashmere & Silk") }
+        binding.leatherBagsShop.setOnClickListener{ openShopCategoryFragment("Leather Bags") }
+        binding.exploreDressesShop.setOnClickListener{ openShopCategoryFragment("Dresses") }
+    }
+
+    private fun openShopCategoryFragment(category: String){
+        activity?.supportFragmentManager?.commit {
+            val arguments = Bundle()
+            arguments.putString("category", category)
+            val fragment = ShopProductsCategoryFragment()
+            fragment.arguments = arguments
+            add(R.id.homeFragment, fragment, "ShopProductsCategoryFragment")
+            addToBackStack("ShopProductsCategoryFragment")
+        }
+    }
+
 }

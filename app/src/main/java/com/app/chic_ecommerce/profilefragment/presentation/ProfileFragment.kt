@@ -48,7 +48,7 @@ class ProfileFragment : Fragment(), KodeinAware {
         binding.wishlistBtn.setOnClickListener {
             activity?.supportFragmentManager?.commit {
                 add(R.id.profileFragment, WishlistFragment(), "WishlistFragment")
-                addToBackStack("CartFragment")
+                addToBackStack("WishlistFragment")
             }
         }
     }

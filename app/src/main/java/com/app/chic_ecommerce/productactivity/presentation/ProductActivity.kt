@@ -31,8 +31,6 @@ class ProductActivity : AppCompatActivity(), KodeinAware {
         binding.session = session
         binding.lifecycleOwner = this
 
-        //intent.getBundleExtra("")
-
         setupView()
         subscribeOnCart()
         subscribeOnFocusedProduct()
@@ -46,13 +44,22 @@ class ProductActivity : AppCompatActivity(), KodeinAware {
             finish()
         }
         binding.favBtn.setOnClickListener {
-            TODO("Add Product To Wishlist")
+            if(session.findInWishlist(session.focusedProduct.value!!) == -1){
+                binding.favBtn.setImageResource(R.mipmap.heart_filled)
+                session.addWishlistProduct(session.focusedProduct.value!!)
+            }else{
+                binding.favBtn.setImageResource(R.mipmap.heart)
+                session.removeWishlistProduct(session.focusedProduct.value!!)
+            }
         }
 
     }
 
     private fun subscribeOnFocusedProduct() {
         session.focusedProduct.observe(this, { product ->
+            if(session.findInWishlist(product) != -1){
+                binding.favBtn.setImageResource(R.mipmap.heart_filled)
+            }
             binding.productName.text = product.name
             binding.productPrice.text = product.price.toString()
             binding.descriptionTxt.text = product.description
@@ -79,7 +86,8 @@ class ProductActivity : AppCompatActivity(), KodeinAware {
             //colors adapter
             val colors: MutableList<Color> = mutableListOf()
             product.colors.split(";").forEach {
-                colors.add(Color(it.split(":")[0], it.split(":")[1]))
+                if(it.isNotEmpty())
+                    colors.add(Color(it.split(":")[0], it.split(":")[1]))
             }
             colorsRecyclerAdapter = ColorsRecyclerAdapter(this, resources){
                 viewModel.selectedColor.postValue(it.name)
