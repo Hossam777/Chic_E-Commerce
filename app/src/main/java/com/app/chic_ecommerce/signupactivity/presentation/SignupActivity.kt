@@ -38,7 +38,6 @@ class SignupActivity : AppCompatActivity(), KodeinAware {
                 session.saveToken(viewModel.token.value!!)
                 session.user.postValue(User(viewModel.username.value!!, viewModel.mail.value!!, viewModel.phone.value!!))
                 startActivity(Intent(this, NavigationActivity::class.java))
-                finish()
             }
         })
     }
@@ -55,7 +54,6 @@ class SignupActivity : AppCompatActivity(), KodeinAware {
     }
 
     fun back(view: View) {
-        startActivity(Intent(this, MainActivity::class.java))
         finish()
     }
 

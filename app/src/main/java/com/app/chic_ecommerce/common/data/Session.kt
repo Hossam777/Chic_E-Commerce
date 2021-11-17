@@ -23,7 +23,6 @@ class Session {
 
     fun saveToken (token: String){
         sharedPreferences.writeString(activity, "token", token)
-        println("Saving....")
     }
 
     fun loadToken (){
@@ -105,7 +104,7 @@ class Session {
             return false
         val list = wishlist.value
         list!!.add(product)
-        wishlist.postValue(list)
+        wishlist.value = list
         saveWishlist()
         return true
     }
@@ -116,7 +115,7 @@ class Session {
             return false
         val list = wishlist.value
         list!!.removeAt(index)
-        wishlist.postValue(list)
+        wishlist.value = list
         saveWishlist()
         return true
     }
@@ -128,12 +127,12 @@ class Session {
             val item = list!![index]
             list.removeAt(index)
             list.add(index, CartProduct(item.id, item.name, item.image, item.size, item.color, item.price, item.quantity + product.quantity))
-            cart.postValue(list)
+            cart.value = list
             saveCart()
             return true
         }
         list!!.add(product)
-        cart.postValue(list)
+        cart.value = list
         saveCart()
         return true
     }
@@ -144,7 +143,7 @@ class Session {
             return false
         val list = cart.value
         list!!.removeAt(index)
-        cart.postValue(list)
+        cart.value = list
         saveCart()
         return true
     }
@@ -157,7 +156,7 @@ class Session {
         val item = list!![index]
         list.removeAt(index)
         list.add(index, CartProduct(item.id, item.name, item.image, item.size, item.color, item.price, item.quantity + 1))
-        cart.postValue(list)
+        cart.value = list
         saveCart()
         return true
     }
@@ -172,13 +171,13 @@ class Session {
         if (item.quantity != 1){
             list.add(CartProduct(item.id, item.name, item.image, item.size, item.color, item.price, item.quantity - 1))
         }
-        cart.postValue(list)
+        cart.value = list
         saveCart()
         return true
     }
 
     fun clearCart() {
-        cart.postValue(arrayListOf())
+        cart.value = arrayListOf()
         saveCart()
     }
 }

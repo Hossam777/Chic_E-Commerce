@@ -38,7 +38,6 @@ class LoginActivity : AppCompatActivity(), KodeinAware {
             session.saveToken(viewModel.token.value!!)
             session.user.postValue(User(viewModel.user.value?.username!!, viewModel.user.value?.mail!!, viewModel.user.value?.phone!!))
             startActivity(Intent(this, NavigationActivity::class.java))
-            finish()
         })
     }
 
@@ -59,8 +58,4 @@ class LoginActivity : AppCompatActivity(), KodeinAware {
         }
     }
 
-    override fun onBackPressed() {
-        startActivity(Intent(this, MainActivity::class.java))
-        finish()
-    }
 }

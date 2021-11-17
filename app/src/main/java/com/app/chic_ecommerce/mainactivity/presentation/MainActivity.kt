@@ -58,7 +58,6 @@ class MainActivity : AppCompatActivity(), KodeinAware {
         viewModel.user.observe(this, {
             session.user.postValue(it)
             startActivity(Intent(this, NavigationActivity::class.java))
-            finish()
         })
     }
 
@@ -70,10 +69,8 @@ class MainActivity : AppCompatActivity(), KodeinAware {
 
     fun login(view: View) {
         startActivity(Intent(this, LoginActivity::class.java))
-        finish()
     }
     fun signup(view: View) {
         startActivity(Intent(this, SignupActivity::class.java))
-        finish()
     }
 }

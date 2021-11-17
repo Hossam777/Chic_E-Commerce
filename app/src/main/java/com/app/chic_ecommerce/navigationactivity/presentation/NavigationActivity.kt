@@ -22,6 +22,7 @@ import com.app.chic_ecommerce.shopproductsfragment.presentation.ShopProductsFrag
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
+import kotlin.system.exitProcess
 
 class NavigationActivity : AppCompatActivity(), KodeinAware {
     override val kodein by kodein()
@@ -55,6 +56,11 @@ class NavigationActivity : AppCompatActivity(), KodeinAware {
             if(session.currentFragment.value!! == FragmentsEnum.CartFragment)
                 binding.navigationActivityTitle.text = resources.getText(R.string.your_cart).toString() + "(" + session.cart.value!!.size + ")"
         })
+    }
+
+    override fun onDestroy() {
+        exitProcess(0)
+        super.onDestroy()
     }
 
     override fun onStart() {

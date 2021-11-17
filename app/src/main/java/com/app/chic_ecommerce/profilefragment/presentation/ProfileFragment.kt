@@ -32,7 +32,7 @@ class ProfileFragment : Fragment(), KodeinAware {
         binding.session = session
         binding.lifecycleOwner = this
 
-        subscribeOnSession()
+        subscribeOnWishlist()
         subscribeOnOpenWishlist()
         subscribeOnEditAccount()
         return binding.root
@@ -60,7 +60,7 @@ class ProfileFragment : Fragment(), KodeinAware {
         }
     }
 
-    private fun subscribeOnSession() {
+    private fun subscribeOnWishlist() {
         session.wishlist.observe(viewLifecycleOwner, {
             if(session.wishlist.value != null){
                 binding.wishlistBtn.text = "WISHLIST(" + session.wishlist.value!!.size.toString() + ")"
