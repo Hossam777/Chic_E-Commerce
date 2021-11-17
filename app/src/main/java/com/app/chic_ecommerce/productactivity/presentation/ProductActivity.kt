@@ -1,10 +1,9 @@
 package com.app.chic_ecommerce.productactivity.presentation
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.Editable
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.app.chic_ecommerce.R
@@ -51,6 +50,7 @@ class ProductActivity : AppCompatActivity(), KodeinAware {
                 , session.focusedProduct.value!!.image1, binding.sizesSpinner.selectedItem.toString()
                 , viewModel.selectedColor.value!!.name.toString(), session.focusedProduct.value!!.price
                 , binding.quantityTxt.text.toString().toInt()))
+            Toast.makeText(this, "Product added to your Cart!", Toast.LENGTH_SHORT).show()
         }
         binding.backBtn.setOnClickListener {
             finish()

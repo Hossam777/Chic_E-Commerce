@@ -1,16 +1,12 @@
 package com.app.chic_ecommerce.navigationactivity.presentation
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.Gravity
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
-import android.widget.ImageView
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
 import com.app.chic_ecommerce.R
@@ -24,7 +20,6 @@ import com.app.chic_ecommerce.shopproductsfragment.presentation.ShopProductsFrag
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
-import java.lang.Exception
 
 class NavigationActivity : AppCompatActivity(), KodeinAware {
     override val kodein by kodein()
@@ -53,7 +48,9 @@ class NavigationActivity : AppCompatActivity(), KodeinAware {
 
     private fun subscribeOnCartChanged() {
         session.cart.observe(this, {
-                binding.cartCounter.text = it.size.toString()
+            binding.cartCounter.text = it.size.toString()
+            if(session.currentFragment.value!! == FragmentsEnum.CartFragment)
+                binding.navigationActivityTitle.text = resources.getText(R.string.your_cart).toString() + "(" + session.cart.value!!.size + ")"
         })
     }
 

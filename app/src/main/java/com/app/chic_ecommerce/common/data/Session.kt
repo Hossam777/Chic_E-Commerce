@@ -1,8 +1,6 @@
 package com.app.chic_ecommerce.common.data
 
 import android.app.Activity
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.lifecycle.MutableLiveData
 import com.app.chic_ecommerce.common.data.entities.CartProduct
 import com.app.chic_ecommerce.common.data.entities.FragmentsEnum
@@ -177,5 +175,10 @@ class Session {
         cart.postValue(list)
         saveCart()
         return true
+    }
+
+    fun clearCart() {
+        cart.postValue(mutableListOf())
+        saveCart()
     }
 }

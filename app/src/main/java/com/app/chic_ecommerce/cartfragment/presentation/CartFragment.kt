@@ -1,14 +1,16 @@
 package com.app.chic_ecommerce.cartfragment.presentation
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.app.chic_ecommerce.R
 import com.app.chic_ecommerce.common.data.Session
+import com.app.chic_ecommerce.common.data.entities.CartProduct
 import com.app.chic_ecommerce.common.data.entities.FragmentsEnum
 import com.app.chic_ecommerce.databinding.FragmentCartBinding
 import org.kodein.di.KodeinAware
@@ -35,7 +37,44 @@ class CartFragment : Fragment(), KodeinAware {
         setupAdapter()
         subscribeOnCart()
         subscribeOnPromoCode()
+        subscribeOnCheckoutBtn()
+        subscribeOnError()
+        subscribeOnDataPosted()
+        subscribeOnLoading()
         return binding.root
+    }
+
+    private fun subscribeOnLoading() {
+        viewModel.onLoading.observe(viewLifecycleOwner, {
+            if(it){
+                binding.loadingLayout.visibility = View.VISIBLE
+            }else{
+                binding.loadingLayout.visibility = View.INVISIBLE
+            }
+        })
+    }
+
+    private fun subscribeOnDataPosted() {
+        viewModel.onDataPosted.observe(viewLifecycleOwner, {
+            Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+            session.clearCart()
+        })
+    }
+
+    private fun subscribeOnError() {
+        viewModel.onError.observe(viewLifecycleOwner, {
+            Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+        })
+    }
+
+    private fun subscribeOnCheckoutBtn() {
+        binding.checkoutBtn.setOnClickListener {
+            if(session.cart.value!!.size == 0){
+                Toast.makeText(context, "Cart is empty", Toast.LENGTH_SHORT).show()
+            }else{
+                viewModel.addOrder(session.token.value!!, "Tersa, Giza", session.cart.value!!)
+            }
+        }
     }
 
     override fun onHiddenChanged(hidden: Boolean) {
@@ -65,6 +104,7 @@ class CartFragment : Fragment(), KodeinAware {
                     totalPrice += it.quantity * it.price
                 }
                 binding.totalPriceTxt.text = "$" + totalPrice
+                viewModel.totalPrice.postValue(totalPrice)
             }
         })
     }

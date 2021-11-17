@@ -21,7 +21,6 @@
     <string name="about">About</string>
     <string name="search">Search</string>
 
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="edit_account">Edit Account</string>
     <string name="cashmere_silk">CASHMERE &amp; SILK</string>
     <string name="shop_leather_bags">Shop Leather Bags</string>
@@ -40,4 +39,5 @@
     <string name="colors">Colors:</string>
     <string name="description">Description</string>
     <string name="phone">Phone</string>
+    <string name="please_wait">Please Wait…</string>
 </resources>

@@ -1,23 +1,20 @@
 package com.app.chic_ecommerce.homefragment.presentation
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import com.app.chic_ecommerce.R
 import com.app.chic_ecommerce.common.data.Session
-import com.app.chic_ecommerce.common.data.entities.CartProduct
 import com.app.chic_ecommerce.common.data.entities.FragmentsEnum
-import com.app.chic_ecommerce.common.data.entities.Product
 import com.app.chic_ecommerce.common.data.entities.SliderItemModel
 import com.app.chic_ecommerce.common.presentation.SliderPagerAdapter
 import com.app.chic_ecommerce.databinding.FragmentHomeBinding
 import com.app.chic_ecommerce.shopproductscategoryfragment.presentation.ShopProductsCategoryFragment
-import com.app.chic_ecommerce.wishlistfragment.presentation.WishlistFragment
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
 import org.kodein.di.generic.instance

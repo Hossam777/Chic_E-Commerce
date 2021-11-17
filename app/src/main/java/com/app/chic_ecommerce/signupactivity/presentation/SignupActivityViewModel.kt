@@ -1,9 +1,7 @@
 package com.app.chic_ecommerce.signupactivity.presentation
 
-import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.app.chic_ecommerce.common.data.entities.User
 import com.app.chic_ecommerce.signupactivity.data.SignupRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers

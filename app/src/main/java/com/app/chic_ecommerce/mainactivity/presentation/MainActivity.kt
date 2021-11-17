@@ -1,10 +1,10 @@
 package com.app.chic_ecommerce.mainactivity.presentation
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.app.chic_ecommerce.R
 import com.app.chic_ecommerce.common.data.Session
@@ -12,8 +12,8 @@ import com.app.chic_ecommerce.databinding.ActivityMainBinding
 import com.app.chic_ecommerce.loginactivity.presentation.LoginActivity
 import com.app.chic_ecommerce.navigationactivity.presentation.NavigationActivity
 import com.app.chic_ecommerce.signupactivity.presentation.SignupActivity
-import org.kodein.di.android.kodein
 import org.kodein.di.KodeinAware
+import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
 
 class MainActivity : AppCompatActivity(), KodeinAware {
@@ -49,7 +49,8 @@ class MainActivity : AppCompatActivity(), KodeinAware {
 
     private fun subscribeOnToken() {
         session.token.observe(this, {
-            viewModel.checkToken(it)
+            if(it.length > 10)
+                viewModel.checkToken(it)
         })
     }
 

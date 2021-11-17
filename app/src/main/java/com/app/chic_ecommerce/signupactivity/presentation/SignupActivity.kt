@@ -1,10 +1,10 @@
 package com.app.chic_ecommerce.signupactivity.presentation
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.app.chic_ecommerce.R
 import com.app.chic_ecommerce.common.data.Session

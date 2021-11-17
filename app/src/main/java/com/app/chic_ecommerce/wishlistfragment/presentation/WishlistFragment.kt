@@ -2,16 +2,15 @@ package com.app.chic_ecommerce.wishlistfragment.presentation
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import com.app.chic_ecommerce.R
 import com.app.chic_ecommerce.common.data.Session
 import com.app.chic_ecommerce.common.data.entities.FragmentsEnum
-import com.app.chic_ecommerce.common.data.mockup.products
 import com.app.chic_ecommerce.databinding.FragmentWishlistBinding
 import com.app.chic_ecommerce.productactivity.presentation.ProductActivity
 import org.kodein.di.KodeinAware
