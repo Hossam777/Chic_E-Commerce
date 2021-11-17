@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
@@ -14,6 +15,7 @@ import com.app.chic_ecommerce.cartfragment.presentation.CartFragment
 import com.app.chic_ecommerce.common.data.Session
 import com.app.chic_ecommerce.common.data.entities.FragmentsEnum
 import com.app.chic_ecommerce.databinding.ActivityNavigationBinding
+import com.app.chic_ecommerce.historyfragment.presentation.HistoryFragment
 import com.app.chic_ecommerce.homefragment.presentation.HomeFragment
 import com.app.chic_ecommerce.profilefragment.presentation.ProfileFragment
 import com.app.chic_ecommerce.shopproductsfragment.presentation.ShopProductsFragment
@@ -36,6 +38,7 @@ class NavigationActivity : AppCompatActivity(), KodeinAware {
         binding.lifecycleOwner = this
 
         supportFragmentManager.commit {
+            add<HistoryFragment>(R.id.fragmentContainer, "HistoryFragment")
             add<CartFragment>(R.id.fragmentContainer, "CartFragment")
             add<ProfileFragment>(R.id.fragmentContainer, "ProfileFragment")
             add<ShopProductsFragment>(R.id.fragmentContainer, "ShopProductsFragment")
@@ -58,6 +61,7 @@ class NavigationActivity : AppCompatActivity(), KodeinAware {
         super.onStart()
         if(firstOpen){
             supportFragmentManager.commit {
+                hide(supportFragmentManager.findFragmentByTag("HistoryFragment")!!)
                 hide(supportFragmentManager.findFragmentByTag("CartFragment")!!)
                 hide(supportFragmentManager.findFragmentByTag("ProfileFragment")!!)
                 hide(supportFragmentManager.findFragmentByTag("ShopProductsFragment")!!)
@@ -99,6 +103,11 @@ class NavigationActivity : AppCompatActivity(), KodeinAware {
                     binding.cartBtn.visibility = View.VISIBLE
                     binding.cartCounter.visibility = View.VISIBLE
                 }
+                FragmentsEnum.HistoryFragment -> {
+                    binding.navigationActivityTitle.text = resources.getText(R.string.history)
+                    binding.cartBtn.visibility = View.VISIBLE
+                    binding.cartCounter.visibility = View.VISIBLE
+                }
             }
         })
     }
@@ -116,6 +125,7 @@ class NavigationActivity : AppCompatActivity(), KodeinAware {
             when(it.itemId){
                 R.id.menu_home_page -> {
                     supportFragmentManager.commit {
+                        hide(supportFragmentManager.findFragmentByTag("HistoryFragment")!!)
                         hide(supportFragmentManager.findFragmentByTag("CartFragment")!!)
                         hide(supportFragmentManager.findFragmentByTag("ProfileFragment")!!)
                         hide(supportFragmentManager.findFragmentByTag("ShopProductsFragment")!!)
@@ -124,6 +134,7 @@ class NavigationActivity : AppCompatActivity(), KodeinAware {
                 }
                 R.id.menu_shop_products -> {
                     supportFragmentManager.commit {
+                        hide(supportFragmentManager.findFragmentByTag("HistoryFragment")!!)
                         hide(supportFragmentManager.findFragmentByTag("CartFragment")!!)
                         hide(supportFragmentManager.findFragmentByTag("ProfileFragment")!!)
                         show(supportFragmentManager.findFragmentByTag("ShopProductsFragment")!!)
@@ -132,6 +143,7 @@ class NavigationActivity : AppCompatActivity(), KodeinAware {
                 }
                 R.id.menu_my_account -> {
                     supportFragmentManager.commit {
+                        hide(supportFragmentManager.findFragmentByTag("HistoryFragment")!!)
                         hide(supportFragmentManager.findFragmentByTag("CartFragment")!!)
                         show(supportFragmentManager.findFragmentByTag("ProfileFragment")!!)
                         hide(supportFragmentManager.findFragmentByTag("ShopProductsFragment")!!)
@@ -140,14 +152,16 @@ class NavigationActivity : AppCompatActivity(), KodeinAware {
                 }
                 R.id.menu_my_cart -> {
                     supportFragmentManager.commit {
+                        hide(supportFragmentManager.findFragmentByTag("HistoryFragment")!!)
                         show(supportFragmentManager.findFragmentByTag("CartFragment")!!)
                         hide(supportFragmentManager.findFragmentByTag("ProfileFragment")!!)
                         hide(supportFragmentManager.findFragmentByTag("ShopProductsFragment")!!)
                         hide(supportFragmentManager.findFragmentByTag("HomeFragment")!!)
                     }
                 }
-                R.id.menu_settings -> {
+                R.id.menu_history -> {
                     supportFragmentManager.commit {
+                        show(supportFragmentManager.findFragmentByTag("HistoryFragment")!!)
                         hide(supportFragmentManager.findFragmentByTag("CartFragment")!!)
                         hide(supportFragmentManager.findFragmentByTag("ProfileFragment")!!)
                         hide(supportFragmentManager.findFragmentByTag("ShopProductsFragment")!!)
@@ -156,6 +170,7 @@ class NavigationActivity : AppCompatActivity(), KodeinAware {
                 }
                 R.id.menu_about -> {
                     supportFragmentManager.commit {
+                        hide(supportFragmentManager.findFragmentByTag("HistoryFragment")!!)
                         hide(supportFragmentManager.findFragmentByTag("CartFragment")!!)
                         hide(supportFragmentManager.findFragmentByTag("ProfileFragment")!!)
                         hide(supportFragmentManager.findFragmentByTag("ShopProductsFragment")!!)
@@ -169,6 +184,7 @@ class NavigationActivity : AppCompatActivity(), KodeinAware {
         binding.navigationView.getHeaderView(0).findViewById<EditText>(R.id.searchBox).setOnEditorActionListener {
                 textView, i, keyEvent ->
             if(i == EditorInfo.IME_ACTION_DONE){
+                Toast.makeText(this, textView.text.toString(), Toast.LENGTH_SHORT).show()
                 true
             }
             false
@@ -176,6 +192,7 @@ class NavigationActivity : AppCompatActivity(), KodeinAware {
         binding.cartBtn.setOnClickListener {
             binding.navigationView.setCheckedItem(R.id.menu_my_cart)
             supportFragmentManager.commit {
+                hide(supportFragmentManager.findFragmentByTag("HistoryFragment")!!)
                 show(supportFragmentManager.findFragmentByTag("CartFragment")!!)
                 hide(supportFragmentManager.findFragmentByTag("ProfileFragment")!!)
                 hide(supportFragmentManager.findFragmentByTag("ShopProductsFragment")!!)

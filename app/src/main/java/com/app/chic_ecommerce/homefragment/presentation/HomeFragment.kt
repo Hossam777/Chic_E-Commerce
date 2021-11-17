@@ -29,7 +29,6 @@ class HomeFragment : Fragment(), KodeinAware {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        session.currentFragment.postValue(FragmentsEnum.HomeFragment)
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
         binding.viewmodel = viewModel
         binding.lifecycleOwner = this

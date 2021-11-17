@@ -3,6 +3,7 @@ package com.app.chic_ecommerce.common
 import android.app.Application
 import com.app.chic_ecommerce.cartfragment.di.cartFragmentModule
 import com.app.chic_ecommerce.common.di.commonModule
+import com.app.chic_ecommerce.historyfragment.di.historyFragmentModule
 import com.app.chic_ecommerce.homefragment.di.homeFragmentModule
 import com.app.chic_ecommerce.loginactivity.di.loginActivityModule
 import com.app.chic_ecommerce.mainactivity.di.mainActivityModule
@@ -32,6 +33,7 @@ class BaseApplication : Application(), KodeinAware {
         import(homeFragmentModule)
         import(shopProductsCategoryModule)
         import(productActivityModule)
+        import(historyFragmentModule)
     }
 
 }

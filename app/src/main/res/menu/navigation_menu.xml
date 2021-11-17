@@ -15,8 +15,8 @@
             android:id="@+id/menu_my_cart"
             android:title="@string/my_cart"/>
         <item
-            android:id="@+id/menu_settings"
-            android:title="@string/settings"/>
+            android:id="@+id/menu_history"
+            android:title="@string/history"/>
         <item
             android:id="@+id/menu_about"
             android:title="@string/about"/>

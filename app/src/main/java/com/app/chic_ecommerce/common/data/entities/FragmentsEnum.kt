@@ -7,4 +7,5 @@ enum class FragmentsEnum {
     ShopProductsFragment,
     HomeFragment,
     ShopProductsCategoryFragment,
+    HistoryFragment
 }

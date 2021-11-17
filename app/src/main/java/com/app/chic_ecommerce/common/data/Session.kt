@@ -55,7 +55,7 @@ class Session {
         }
     }
 
-    fun saveCart (){
+    private fun saveCart (){
         var txt = ""
         if(cart.value!!.isEmpty()){
             sharedPreferences.writeString(activity, "cart", txt)
@@ -178,7 +178,7 @@ class Session {
     }
 
     fun clearCart() {
-        cart.postValue(mutableListOf())
+        cart.postValue(arrayListOf())
         saveCart()
     }
 }
